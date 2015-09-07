@@ -1,17 +1,21 @@
-package com.example.alvin.simplecontactlist;
+package com.example.alvin.simplecontactlist.control;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.alvin.simplecontactlist.R;
+import com.example.alvin.simplecontactlist.view.MainFrag;
 
-public class MainActivity extends ActionBarActivity {
+
+public class MainActivity extends ActionBarActivity implements IContactsItemClickDelegate{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ((MainFrag)getSupportFragmentManager().findFragmentById(R.id.mainfrag)).setClickHandler(this);
     }
 
 
@@ -35,5 +39,10 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClicked(int itemIndex) {
+
     }
 }
