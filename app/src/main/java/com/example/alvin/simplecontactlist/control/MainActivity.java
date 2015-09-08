@@ -22,8 +22,10 @@ public class MainActivity extends ActionBarActivity implements ITopLevelDelegate
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ContactsDataManager.getInstance().setAppContext(this.getApplicationContext());
-        setContentView(R.layout.activity_main);
-        showMainList();
+        if (savedInstanceState == null) {
+            setContentView(R.layout.activity_main);
+            showMainList();
+        }
     }
 
     @Override
@@ -74,29 +76,6 @@ public class MainActivity extends ActionBarActivity implements ITopLevelDelegate
             getFragmentManager().popBackStack();
         } else {
             finish();
-        }
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home || id == R.id.up || id == R.id.homeAsUp) {
-            goBack();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            Fragment lastFragment = getFragmentManager().findFragmentById(getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 1)
-                    .getId());
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.frag_placeholder, lastFragment);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ft.commit();
         }
     }
 

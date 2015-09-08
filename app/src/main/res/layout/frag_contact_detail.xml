@@ -4,10 +4,13 @@
         <variable name="detail" type="com.example.alvin.simplecontactlist.model.PerContactInfo"/>
     </data>
     <ScrollView
+        android:id="@+id/meaninglessname_0"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
-            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:id="@+id/meaninglessname_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/light_gray"
             android:clickable="false">
             <RelativeLayout
@@ -102,6 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:id="@+id/meaninglessname_2"
                     android:layout_below="@id/bs"
                     style="@style/GrayText"
                     android:text="@string/company"

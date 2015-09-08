@@ -39,10 +39,6 @@ public class MainFrag extends Fragment {
     public MainFrag() {
     }
 
-    public void setTopLevelHandler(ITopLevelDelegate clickHandler) {
-        mClickHandler = clickHandler;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

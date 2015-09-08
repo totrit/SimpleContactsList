@@ -5,7 +5,9 @@
         <variable name="controller" type="DisplayController"/>
     </data>
     <RelativeLayout
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:id="@+id/meaninglessname_4"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view/MainFrag"
         android:background="@color/light_gray">
@@ -24,6 +26,7 @@
                 android:gravity="center_horizontal"
                 android:text="@{controller.state == DisplayController.STAT_IN_PROGRESS? @string/in_progress: @string/error_hint}"/>
             <ProgressBar
+                android:id="@+id/meaninglessname_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/hint_txt"
