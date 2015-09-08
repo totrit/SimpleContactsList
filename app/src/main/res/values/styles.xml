@@ -6,6 +6,7 @@
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/BlueActionBar</item>
     </style>
+
     <style name="BlueActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/blue</item>
         <!-- Support library compatibility -->
@@ -19,6 +20,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
+
     <style name="ImportantText" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/dark</item>
         <item name="android:textSize">@dimen/large_font_size</item>

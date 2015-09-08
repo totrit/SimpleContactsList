@@ -47,7 +47,7 @@ public class MainFrag extends Fragment {
         setHasOptionsMenu(true);
         ((ITopLevelDelegate)getActivity()).showBackButton(false);
         mDisplayController = new DisplayController();
-        FragmentMainBinding binding = DataBindingUtil.bind(fragRoot);
+        FragmentMainBinding binding = FragmentMainBinding.bind(fragRoot);
         binding.setController(mDisplayController);
         mRecyclerView = (RecyclerView) fragRoot.findViewById(R.id.lv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));

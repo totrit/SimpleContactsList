@@ -99,21 +99,25 @@ public class ContactsDataManager {
                 return mContactsList;
             }
             case SORT_ASC: {
-                Collections.sort(mContactsList, new Comparator<PerContactInfo>() {
-                    @Override
-                    public int compare(PerContactInfo p0, PerContactInfo p1) {
-                        return p0.name.compareToIgnoreCase(p1.name);
-                    }
-                });
+                if (mContactsList != null) {
+                    Collections.sort(mContactsList, new Comparator<PerContactInfo>() {
+                        @Override
+                        public int compare(PerContactInfo p0, PerContactInfo p1) {
+                            return p0.name.compareToIgnoreCase(p1.name);
+                        }
+                    });
+                }
                 return mContactsList;
             }
             case SORT_DESC: {
-                Collections.sort(mContactsList, new Comparator<PerContactInfo>() {
-                    @Override
-                    public int compare(PerContactInfo p0, PerContactInfo p1) {
-                        return p1.name.compareToIgnoreCase(p0.name);
-                    }
-                });
+                if (mContactsList != null) {
+                    Collections.sort(mContactsList, new Comparator<PerContactInfo>() {
+                        @Override
+                        public int compare(PerContactInfo p0, PerContactInfo p1) {
+                            return p1.name.compareToIgnoreCase(p0.name);
+                        }
+                    });
+                }
                 return mContactsList;
             }
             default: {

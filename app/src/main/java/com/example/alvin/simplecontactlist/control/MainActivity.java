@@ -79,4 +79,15 @@ public class MainActivity extends ActionBarActivity implements ITopLevelDelegate
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home || id == R.id.up || id == R.id.homeAsUp) {
+            goBack();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
