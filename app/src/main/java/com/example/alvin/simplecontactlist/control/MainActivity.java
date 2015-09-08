@@ -7,12 +7,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.example.alvin.simplecontactlist.R;
 import com.example.alvin.simplecontactlist.model.ContactsDataManager;
 import com.example.alvin.simplecontactlist.utils.LogUtils;
 import com.example.alvin.simplecontactlist.view.ContactDetailFrag;
 import com.example.alvin.simplecontactlist.view.MainFrag;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 
 public class MainActivity extends ActionBarActivity implements ITopLevelDelegate {
@@ -21,6 +23,7 @@ public class MainActivity extends ActionBarActivity implements ITopLevelDelegate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setupMinorStyle();
         ContactsDataManager.getInstance().setAppContext(this.getApplicationContext());
         if (savedInstanceState == null) {
             setContentView(R.layout.activity_main);
@@ -89,5 +92,12 @@ public class MainActivity extends ActionBarActivity implements ITopLevelDelegate
         return super.onOptionsItemSelected(item);
     }
 
+    private void setupMinorStyle() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintColor(getResources().getColor(R.color.blue));
+        tintManager.setStatusBarTintEnabled(true);
+    }
 
 }
