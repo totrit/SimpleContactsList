@@ -31,6 +31,10 @@ public class PerContactInfo {
         this.company = company;
     }
 
+    public String getAddress() {
+        return address.toString();
+    }
+
     static class Address {
         public final String street;
         public final String suite;
@@ -50,6 +54,13 @@ public class PerContactInfo {
             this.geo = geo;
         }
 
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder(128);
+            sb.append(suite).append(",").append(street).append(",").append(city).append(",").append(zipcode);
+            return sb.toString();
+        }
+
         static class Geo {
             public final String lat;
             public final String lng;
@@ -63,7 +74,7 @@ public class PerContactInfo {
 
     }
 
-    static class Company {
+    public static class Company {
         public final String name;
         public final String catchPhrase;
         public final String bs;

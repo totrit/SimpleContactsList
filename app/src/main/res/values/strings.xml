@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">SimpleContactList</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_sort_asc">Sort by A-Z</string>
+    <string name="action_sort_desc">Sort by Z-A</string>
+    <string name="in_progress">Loading Contacts…</string>
+    <string name="error_hint">ERROR\nTap to retry</string>
+    <string name="username">USERNAME</string>
+    <string name="phone">PHONE</string>
+    <string name="address">ADDRESS</string>
+    <string name="website">WEBSITE</string>
+    <string name="company">COMPANY</string>
+    <string name="main_title">Contacts</string>
 </resources>

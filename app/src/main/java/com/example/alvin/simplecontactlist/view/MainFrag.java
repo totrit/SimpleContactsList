@@ -1,19 +1,27 @@
 package com.example.alvin.simplecontactlist.view;
 
+import android.app.Fragment;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.alvin.simplecontactlist.BR;
 import com.example.alvin.simplecontactlist.R;
-import com.example.alvin.simplecontactlist.control.IContactsItemClickDelegate;
+import com.example.alvin.simplecontactlist.control.ITopLevelDelegate;
+import com.example.alvin.simplecontactlist.databinding.FragmentMainBinding;
 import com.example.alvin.simplecontactlist.databinding.MainListItemBinding;
+import com.example.alvin.simplecontactlist.model.ContactsDataManager;
+import com.example.alvin.simplecontactlist.model.IDataLoadCallback;
 import com.example.alvin.simplecontactlist.model.PerContactInfo;
-import com.example.alvin.simplecontactlist.utils.NetUtils;
 
 import java.util.List;
 
@@ -24,12 +32,13 @@ import java.util.List;
 public class MainFrag extends Fragment {
     private MainListAdapter mListAdapter;
     private RecyclerView mRecyclerView;
-    private IContactsItemClickDelegate mClickHandler;
+    private ITopLevelDelegate mClickHandler;
+    private DisplayController mDisplayController;
 
     public MainFrag() {
     }
 
-    public void setClickHandler(IContactsItemClickDelegate clickHandler) {
+    public void setTopLevelHandler(ITopLevelDelegate clickHandler) {
         mClickHandler = clickHandler;
     }
 
@@ -37,23 +46,71 @@ public class MainFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragRoot = inflater.inflate(R.layout.fragment_main, container, false);
+        mClickHandler = (ITopLevelDelegate)getActivity();
+        setHasOptionsMenu(true);
+        ((ITopLevelDelegate)getActivity()).showBackButton(false);
+        mDisplayController = new DisplayController();
+        FragmentMainBinding binding = DataBindingUtil.bind(fragRoot);
+        binding.setController(mDisplayController);
         mRecyclerView = (RecyclerView) fragRoot.findViewById(R.id.lv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mListAdapter = new MainListAdapter();
         mRecyclerView = (RecyclerView) fragRoot.findViewById(R.id.lv);
         mRecyclerView.setAdapter(mListAdapter);
-        NetUtils.asyncFetchContacts(getActivity(), new NetUtils.IContactsFetchCallback() {
+        loadData();
+        fragRoot.findViewById(R.id.hint).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(List<PerContactInfo> contacts) {
-                mListAdapter.setData(contacts);
+            public void onClick(View view) {
+                if (mDisplayController.getState() == DisplayController.STAT_ERROR) {
+                    mDisplayController.setState(DisplayController.STAT_IN_PROGRESS);
+                    loadData();
+                }
+            }
+        });
+        return fragRoot;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ITopLevelDelegate)getActivity()).changeTitle(getResources().getString(R.string.main_title));
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_sort_asc) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void loadData() {
+        ContactsDataManager.getInstance().loadContacts(new IDataLoadCallback() {
+            @Override
+            public void onSuccess(List<PerContactInfo> fetched) {
+                mListAdapter.setData(ContactsDataManager.getInstance().getContactsList(ContactsDataManager.SORT_NONE));
+                mDisplayController.setState(DisplayController.STAT_DISPLAY_LIST);
             }
 
             @Override
             public void onFail(String errMsg) {
-                //TODO tap to refresh
+                mDisplayController.setState(DisplayController.STAT_ERROR);
             }
-        });
-        return fragRoot;
+        }, false);
     }
 
     private class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
@@ -70,7 +127,7 @@ public class MainFrag extends Fragment {
             @Override
             public void onClick(View v) {
                 if (mClickHandler != null) {
-                    mClickHandler.onItemClicked(this.getPosition());
+                    mClickHandler.displayContact(mDataSet.get(this.getPosition()).id);
                 }
             }
         }
@@ -103,4 +160,23 @@ public class MainFrag extends Fragment {
         }
 
     }
+
+    public static class DisplayController extends BaseObservable {
+        private static int enum_counter = 0;
+        public static final int STAT_IN_PROGRESS = enum_counter++;
+        public static final int STAT_DISPLAY_LIST = enum_counter++;
+        public static final int STAT_ERROR = enum_counter++;
+        private int state = STAT_IN_PROGRESS;
+
+        public void setState(int newState) {
+            state = newState;
+            notifyPropertyChanged(BR.state);
+        }
+
+        @Bindable
+        public int getState() {
+            return state;
+        }
+    }
+
 }
