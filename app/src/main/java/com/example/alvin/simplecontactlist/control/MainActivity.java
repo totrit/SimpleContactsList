@@ -1,6 +1,8 @@
 package com.example.alvin.simplecontactlist.control;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -26,7 +28,7 @@ public class MainActivity extends ActionBarActivity implements ITopLevelDelegate
 
     @Override
     public void displayContact(int id) {
-        ContactDetailFrag newFragment = ContactDetailFrag.createInstance(id, this);
+        ContactDetailFrag newFragment = ContactDetailFrag.createInstance(id);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.fragment_push_in, R.anim.fragment_push_out, R.anim.fragment_pop_in, R.anim.fragment_pop_out);
         ft.replace(R.id.frag_placeholder, newFragment);
@@ -84,6 +86,18 @@ public class MainActivity extends ActionBarActivity implements ITopLevelDelegate
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            Fragment lastFragment = getFragmentManager().findFragmentById(getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 1)
+                    .getId());
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.frag_placeholder, lastFragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.commit();
+        }
     }
 
 }

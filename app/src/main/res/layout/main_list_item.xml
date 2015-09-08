@@ -4,13 +4,18 @@
         <variable name="contact" type="com.example.alvin.simplecontactlist.model.PerContactInfo"/>
     </data>
     <RelativeLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light"
+        android:padding="@dimen/small_padding">
     <TextView
         android:id="@+id/name"
+        style="@style/ImportantText"
         android:text="@{contact.name}"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
+        style="@style/GrayText"
         android:text="@{contact.email}"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

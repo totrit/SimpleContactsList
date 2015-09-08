@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +58,7 @@ public class MainFrag extends Fragment {
         mListAdapter = new MainListAdapter();
         mRecyclerView = (RecyclerView) fragRoot.findViewById(R.id.lv);
         mRecyclerView.setAdapter(mListAdapter);
+        mRecyclerView.addItemDecoration(new Divider((int) getResources().getDimension(R.dimen.view_divider_height)));
         loadData();
         fragRoot.findViewById(R.id.hint).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,13 +87,13 @@ public class MainFrag extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_sort_asc) {
+            mListAdapter.setData(ContactsDataManager.getInstance().getContactsList(ContactsDataManager.SORT_ASC));
+            return true;
+        } else if (id == R.id.action_sort_desc) {
+            mListAdapter.setData(ContactsDataManager.getInstance().getContactsList(ContactsDataManager.SORT_DESC));
             return true;
         }
 
@@ -176,6 +178,21 @@ public class MainFrag extends Fragment {
         @Bindable
         public int getState() {
             return state;
+        }
+    }
+
+    static class Divider extends RecyclerView.ItemDecoration {
+
+        private final int mSpace;
+
+        public Divider(int space) {
+            this.mSpace = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                                   RecyclerView.State state) {
+            outRect.bottom = mSpace;
         }
     }
 

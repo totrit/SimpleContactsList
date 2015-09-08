@@ -57,7 +57,7 @@ public class PerContactInfo {
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder(128);
-            sb.append(suite).append(",").append(street).append(",").append(city).append(",").append(zipcode);
+            sb.append(suite).append(", ").append(street).append(", ").append(city).append(", ").append(zipcode);
             return sb.toString();
         }
 

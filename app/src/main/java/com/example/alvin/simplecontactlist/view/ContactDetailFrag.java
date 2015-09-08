@@ -26,13 +26,11 @@ import java.util.List;
  */
 public class ContactDetailFrag extends Fragment{
     private final static String LOG_TAG = "ContactDetailFrag";
-    private ITopLevelDelegate mTopLevelDelegate;
     public ContactDetailFrag() {
     }
 
-    public static ContactDetailFrag createInstance(int id, ITopLevelDelegate topLevelDelegate) {
+    public static ContactDetailFrag createInstance(int id) {
         ContactDetailFrag newFrag = new ContactDetailFrag();
-        newFrag.mTopLevelDelegate = topLevelDelegate;
 
         Bundle args = new Bundle();
         args.putInt("id", id);
@@ -53,7 +51,7 @@ public class ContactDetailFrag extends Fragment{
             public void onSuccess(List<PerContactInfo> fetchedRawList) {
                 PerContactInfo info = ContactsDataManager.getInstance().getContactInfo(id);
                 LogUtils.d(LOG_TAG, "displaying contact, id=" + id + ", info=" + info);
-                mTopLevelDelegate.changeTitle(info.name);
+                ((ITopLevelDelegate)getActivity()).changeTitle(info.name);
                 FragContactDetailBinding binding = DataBindingUtil.bind(fragRoot);
                 binding.setDetail(info);
             }
