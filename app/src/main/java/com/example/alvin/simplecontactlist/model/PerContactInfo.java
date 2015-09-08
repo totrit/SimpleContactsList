@@ -14,13 +14,13 @@ public class PerContactInfo {
     public final Company company;
 
     public PerContactInfo(int id,
-                           String name,
-                           String username,
-                           String email,
-                           Address address,
-                           String phone,
-                           String website,
-                           Company company) {
+                          String name,
+                          String username,
+                          String email,
+                          Address address,
+                          String phone,
+                          String website,
+                          Company company) {
         this.id = id;
         this.name = name;
         this.username = username;

@@ -28,7 +28,8 @@ public class NetUtils {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
-                        List<PerContactInfo> ret = gson.fromJson(response, new TypeToken<List<PerContactInfo>>(){}.getType());
+                        List<PerContactInfo> ret = gson.fromJson(response, new TypeToken<List<PerContactInfo>>() {
+                        }.getType());
 
                         callback.onSuccess(ret);
                     }

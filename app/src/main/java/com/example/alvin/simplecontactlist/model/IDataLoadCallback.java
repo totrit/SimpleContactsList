@@ -7,5 +7,6 @@ import java.util.List;
  */
 public interface IDataLoadCallback {
     void onSuccess(List<PerContactInfo> fetchedRawList);
+
     void onFail(String errMsg);
 }

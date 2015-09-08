@@ -17,10 +17,10 @@ public class ContactsDataManager {
     public final static int SORT_NONE = 0;
     public final static int SORT_ASC = 1;
     public final static int SORT_DESC = 2;
-    private Context mAppContext = null;
+    private static ContactsDataManager sInstance = null;
     SparseArray<PerContactInfo> mContactsMap = null;
     List<PerContactInfo> mContactsList = null;
-    private static ContactsDataManager sInstance = null;
+    private Context mAppContext = null;
     private List<IDataLoadCallback> mLoadListeners = new ArrayList<IDataLoadCallback>(1);
     private volatile boolean loading = false;
 
@@ -65,12 +65,12 @@ public class ContactsDataManager {
                         } else if (mContactsMap != null) {
                             mContactsMap.clear();
                         }
-                        for (int i = 0; i < fetchedRawList.size(); i ++) {
+                        for (int i = 0; i < fetchedRawList.size(); i++) {
                             mContactsMap.append(fetchedRawList.get(i).id, fetchedRawList.get(i));
                         }
                         synchronized (mLoadListeners) {
                             loading = false;
-                            for (int i = 0; i < mLoadListeners.size(); i ++) {
+                            for (int i = 0; i < mLoadListeners.size(); i++) {
                                 mLoadListeners.get(i).onSuccess(fetchedRawList);
                             }
                             mLoadListeners.clear();
@@ -82,7 +82,7 @@ public class ContactsDataManager {
                         // cached data will not be cleared
                         synchronized (mLoadListeners) {
                             loading = false;
-                            for (int i = 0; i < mLoadListeners.size(); i ++) {
+                            for (int i = 0; i < mLoadListeners.size(); i++) {
                                 mLoadListeners.get(i).onFail(errMsg);
                             }
                             mLoadListeners.clear();

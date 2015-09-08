@@ -30,107 +30,107 @@
                 <TextView
                     android:id="@+id/username_txt"
                     style="@style/ImportantText"
-                    android:text="@{detail.username}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@{detail.username}" />
 
                 <TextView
                     android:id="@+id/username_title"
                     style="@style/GrayText"
-                    android:text="@string/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/username_txt" />
+                    android:layout_below="@id/username_txt"
+                    android:text="@string/username" />
 
                 <TextView
                     android:id="@+id/phone_txt"
                     style="@style/ImportantText"
-                    android:text="@{detail.phone}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/username_title" />
+                    android:layout_below="@id/username_title"
+                    android:text="@{detail.phone}" />
 
                 <TextView
                     android:id="@+id/phone_title"
-                    android:layout_below="@id/phone_txt"
                     style="@style/GrayText"
-                    android:text="@string/phone"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_txt"
+                    android:text="@string/phone" />
 
                 <TextView
                     android:id="@+id/address_txt"
-                    android:layout_below="@id/phone_title"
                     style="@style/ImportantText"
-                    android:text="@{detail.address}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_title"
+                    android:text="@{detail.address}" />
 
                 <TextView
                     android:id="@+id/address_title"
-                    android:layout_below="@id/address_txt"
                     style="@style/GrayText"
-                    android:text="@string/address"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/address_txt"
+                    android:text="@string/address" />
 
                 <TextView
                     android:id="@+id/website_txt"
-                    android:layout_below="@id/address_title"
                     style="@style/ImportantText"
-                    android:text="@{detail.website}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/address_title"
+                    android:text="@{detail.website}" />
 
                 <TextView
                     android:id="@+id/website_title"
-                    android:layout_below="@id/website_txt"
                     style="@style/GrayText"
-                    android:text="@string/website"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/website_txt"
+                    android:text="@string/website" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/part2"
-                android:layout_below="@id/part1"
-                android:background="@color/light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/part1"
                 android:layout_marginTop="@dimen/view_divider_height"
+                android:background="@color/light"
                 android:clickable="false"
                 android:padding="@dimen/large_padding">
 
                 <TextView
                     android:id="@+id/name"
                     style="@style/ImportantText"
-                    android:text="@{detail.company.name}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@{detail.company.name}" />
 
                 <TextView
                     android:id="@+id/catch_phrase"
-                    android:layout_below="@id/name"
                     style="@style/ImportantText"
-                    android:text="@{detail.company.catchPhrase}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:text="@{detail.company.catchPhrase}" />
 
                 <TextView
                     android:id="@+id/bs"
-                    android:layout_below="@id/catch_phrase"
                     style="@style/ImportantText"
-                    android:text="@{detail.company.bs}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/catch_phrase"
+                    android:text="@{detail.company.bs}" />
 
                 <TextView
                     android:id="@+id/meaninglessname_2"
-                    android:layout_below="@id/bs"
                     style="@style/GrayText"
-                    android:text="@string/company"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bs"
+                    android:text="@string/company" />
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

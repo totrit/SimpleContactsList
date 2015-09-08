@@ -43,9 +43,9 @@ public class MainFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragRoot = inflater.inflate(R.layout.fragment_main, container, false);
-        mClickHandler = (ITopLevelDelegate)getActivity();
+        mClickHandler = (ITopLevelDelegate) getActivity();
         setHasOptionsMenu(true);
-        ((ITopLevelDelegate)getActivity()).showBackButton(false);
+        ((ITopLevelDelegate) getActivity()).showBackButton(false);
         mDisplayController = new DisplayController();
         FragmentMainBinding binding = FragmentMainBinding.bind(fragRoot);
         binding.setController(mDisplayController);
@@ -77,7 +77,7 @@ public class MainFrag extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((ITopLevelDelegate)getActivity()).changeTitle(getResources().getString(R.string.main_title));
+        ((ITopLevelDelegate) getActivity()).changeTitle(getResources().getString(R.string.main_title));
     }
 
 
@@ -111,24 +111,41 @@ public class MainFrag extends Fragment {
         }, false);
     }
 
+    public static class DisplayController extends BaseObservable {
+        private static int enum_counter = 0;
+        public static final int STAT_IN_PROGRESS = enum_counter++;
+        public static final int STAT_DISPLAY_LIST = enum_counter++;
+        public static final int STAT_ERROR = enum_counter++;
+        private int state = STAT_IN_PROGRESS;
+
+        @Bindable
+        public int getState() {
+            return state;
+        }
+
+        public void setState(int newState) {
+            state = newState;
+            notifyPropertyChanged(BR.state);
+        }
+    }
+
+    static class Divider extends RecyclerView.ItemDecoration {
+
+        private final int mSpace;
+
+        public Divider(int space) {
+            this.mSpace = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                                   RecyclerView.State state) {
+            outRect.bottom = mSpace;
+        }
+    }
+
     private class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
         private List<PerContactInfo> mDataSet;
-
-        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            private MainListItemBinding mRowBinding;
-            public ViewHolder(View v) {
-                super(v);
-                mRowBinding = DataBindingUtil.bind(v);
-                v.setOnClickListener(this);
-            }
-
-            @Override
-            public void onClick(View v) {
-                if (mClickHandler != null) {
-                    mClickHandler.displayContact(mDataSet.get(this.getPosition()).id);
-                }
-            }
-        }
 
         public void setData(List<PerContactInfo> dataset) {
             mDataSet = dataset;
@@ -157,39 +174,23 @@ public class MainFrag extends Fragment {
             return mDataSet.size();
         }
 
-    }
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            private MainListItemBinding mRowBinding;
 
-    public static class DisplayController extends BaseObservable {
-        private static int enum_counter = 0;
-        public static final int STAT_IN_PROGRESS = enum_counter++;
-        public static final int STAT_DISPLAY_LIST = enum_counter++;
-        public static final int STAT_ERROR = enum_counter++;
-        private int state = STAT_IN_PROGRESS;
+            public ViewHolder(View v) {
+                super(v);
+                mRowBinding = DataBindingUtil.bind(v);
+                v.setOnClickListener(this);
+            }
 
-        public void setState(int newState) {
-            state = newState;
-            notifyPropertyChanged(BR.state);
+            @Override
+            public void onClick(View v) {
+                if (mClickHandler != null) {
+                    mClickHandler.displayContact(mDataSet.get(this.getPosition()).id);
+                }
+            }
         }
 
-        @Bindable
-        public int getState() {
-            return state;
-        }
-    }
-
-    static class Divider extends RecyclerView.ItemDecoration {
-
-        private final int mSpace;
-
-        public Divider(int space) {
-            this.mSpace = space;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
-            outRect.bottom = mSpace;
-        }
     }
 
 }
